@@ -39,7 +39,7 @@ export class AppComponent {
 
   currentDate = new Date();
 
-  cost = 3999;
+  cost = 41999.95;
 
   testResult = 42;
 

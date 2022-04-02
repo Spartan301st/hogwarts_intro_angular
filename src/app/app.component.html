@@ -1,12 +1,10 @@
-<!-- <ng-template ngIf="lightClass">
-  <p>Btn is cool</p>
-</ng-template> -->
-
 <!-- top quote -->
-
-<!-- <h1>Hello {{ name.toUpperCase() }}</h1> -->
-<!-- using angular's pipes -->
-<h2>{{ getQuote() | titlecase }}</h2>
+<div class="top-container">
+  <!-- angular's pipes for capitalizing 1st letter of each word-->
+  <h2 class="gradient-color">{{ getQuote() | titlecase }}</h2>
+  <!-- DatePipe  -->
+  <p>Current date: {{ currentDate | date: "medium" }}</p>
+</div>
 
 <div class="imgs-container">
   <!-- using ngFor directive for looping through all the images stored in the app's class -->
@@ -14,59 +12,80 @@
     *ngFor="let img of images; let i = index"
     [img]="img"
     (imgSelected)="logImg($event)"
-    ><p>House #{{ i }}</p></app-post
+    ><p>House {{ i }}</p></app-post
   >
 </div>
 
 <div class="details-container">
   <h3>Some details to consider</h3>
+  <ul>
+    <!-- writing expression in the template -->
+    <li>Min application age: {{ 10 + 1 }}</li>
+    <!-- CurrencyPipe -->
+    <li>Annual tution fee: {{ cost | currency: "GBP" }}</li>
+    <!-- DecimalPipe -->
+    <li>
+      Min required pts to pass an exam: {{ testResult | number: "1.2-5" }} MP
+    </li>
+  </ul>
 </div>
-<!-- shortcut for adding ng-template -->
-<div *ngIf="ptsToGrif">
-  <img src="../assets/dubledore.png" alt="" />
-  <p>50 pts to gryffindor</p>
+
+<hr class="gradient-color" />
+
+<div class="bottom-images-container">
+  <div class="img-url-container">
+    <!-- event and property binding keyup, value -->
+    <input
+      class="url-input"
+      type="text"
+      placeholder="New image URL"
+      (keyup)="changeImage($event)"
+      [value]="imgUrl"
+    />
+
+    <!-- We have defined an alias prop name (img) in the child component and passed element between component tags to be rendered-->
+    <app-post [img]="imgUrl" (imgSelected)="logImg($event)"
+      ><p>Welcome to Hogwarts</p></app-post
+    >
+  </div>
+  <div class="magic-img-btn-container">
+    <!-- shortcut for adding ng-template with ngIf directive; img and text appear once the condition is satisfied -->
+    <div *ngIf="ptsToGrif" class="magic-image-container">
+      <img src="../assets/dubledore.png" alt="" />
+      <p>50 pts to Gryffindor</p>
+    </div>
+    <button
+      (click)="ptsToGrif = !ptsToGrif"
+      [ngClass]="{ lightenbg: ptsToGrif }"
+      [ngStyle]="{ 'font-size.px': fontSize }"
+      class="color-toggle-btn"
+    >
+      Click for Magic
+    </button>
+  </div>
 </div>
 
-<button
-  (click)="ptsToGrif = !ptsToGrif"
-  [ngClass]="{ lightenbg: ptsToGrif }"
-  [ngStyle]="{ 'font-size.px': fontSize }"
-  class="color-toggle-btn"
->
-  Magic
-</button>
-<hr />
+<!-- // Notes from prev lectures, not used in final output \\ -->
 
-<!-- <div class="whole-container"> -->
-<!-- event and property binding keyup, value -->
-<input
-  class="url-input"
-  type="text"
-  placeholder="New image URL"
-  (keyup)="changeImage($event)"
-  [value]="imgUrl"
-/>
-<img src="{{ imgUrl }}" alt="" />
-<!-- property binding -->
-<!-- passed to the child post component -->
-<img [src]="imgUrl" alt="" />
-<!-- child component, with property binding for passing the value from the parent to child -->
-<!-- <app-post [postImg]="imgUrl"></app-post> -->
-<!-- We have defined an alias prop name (img) in the child component -->
-<app-post [img]="imgUrl" (imgSelected)="logImg($event)"
-  ><p>Welcome to the hogwarts</p></app-post
->
+<!-- * ng-template with ngIf for conditional rendering -->
+<!-- <ng-template ngIf="lightClass">
+  <p>Btn is cool</p>
+</ng-template> -->
 
-<p>Min application age: {{ 10 + 1 }}</p>
-<!-- Below DatePipe was used -->
-<!-- <p>Date: {{ currentDate | date: "dd/LL/y h:m:s" }}</p> -->
-<p>Current date: {{ currentDate | date: "medium" }}</p>
-<!-- currency pipe formatting -->
-<p>Annual tution fee: {{ cost | currency: "GBP" }}</p>
-<!-- decimal pipe formatting -->
-<p>Min required pts to pass an exam: {{ testResult | number: "1.2-5" }}</p>
-<!-- json pipe -->
+<!-- * angular pipe examples -->
+<!-- pipe for capitalizing all the characters -->
+<!-- <h1>Hello {{ name.toUpperCase() }}</h1> -->
+<!-- pipe for converting data to json format-->
 <!-- <pre>
     {{ characters | json }}
   </pre> -->
-<!-- </div> -->
+<!-- pipe for formatting date input -->
+<!-- <p>Date: {{ currentDate | date: "dd/LL/y h:m:s" }}</p> -->
+
+<!-- * using variables in component template -->
+<!-- <img src="{{ imgUrl }}" alt="" /> -->
+
+<!-- * property binding -->
+<!-- <img [src]="imgUrl" alt="" /> -->
+<!-- child component, with property binding for passing the value from the parent to child -->
+<!-- <app-post [postImg]="imgUrl"></app-post> -->
